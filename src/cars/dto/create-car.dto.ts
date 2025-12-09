@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateCarDto {
   @IsNumber()
@@ -17,5 +17,6 @@ export class CreateCarDto {
   licensePlate: string;
 
   @IsString()
-  info: string;
+  @IsOptional()
+  info?: string;
 }
