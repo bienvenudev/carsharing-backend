@@ -23,16 +23,18 @@ model CarType {
   id       Int    @id @default(autoincrement())
   name     String
   imageUrl String
+  cars     Car[] // Not a database column, just lets you query carType.cars
 }
 
-// model Cars {
-//   id Int @id @default(autoincrement())
-//   carTypeId Int 
-//   name String
-//   ownerId Int
-//   state String
-//   fuelType String
-//   horsepower Int
-//   licensePlate String
-//   info String?
-// }
+model Car {
+  id           Int     @id @default(autoincrement())
+  carTypeId    Int // Foreign key (just a number)
+  carType      CarType @relation(fields: [carTypeId], references: [id]) // ← The relation: "Use carTypeId to point to CarType's id"
+  name         String
+  ownerId      Int
+  state        String
+  fuelType     String
+  horsepower   Int
+  licensePlate String  @unique
+  info         String?
+}
