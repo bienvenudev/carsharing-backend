@@ -1,19 +1,30 @@
-import { IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsPositive,
+} from 'class-validator';
 
 export class CreateCarDto {
-  @IsNumber()
+  @IsInt()
+  @IsPositive()
   carTypeId: number;
 
   @IsString()
+  @IsNotEmpty()
   name: string;
 
   @IsString()
+  @IsNotEmpty()
   fuelType: string;
 
-  @IsNumber()
+  @IsInt()
+  @IsPositive()
   horsepower: number;
 
   @IsString()
+  @IsNotEmpty()
   licensePlate: string;
 
   @IsString()
