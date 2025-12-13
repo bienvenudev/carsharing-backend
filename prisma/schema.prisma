@@ -15,8 +15,10 @@ datasource db {
 }
 
 model User {
-  id   Int    @id @default(autoincrement())
-  name String
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  password String
+  cars     Car[]
 }
 
 model CarType {
@@ -28,13 +30,23 @@ model CarType {
 
 model Car {
   id           Int     @id @default(autoincrement())
-  carTypeId    Int // Foreign key (just a number)
+  carTypeId    Int // Foreign key to CarType
   carType      CarType @relation(fields: [carTypeId], references: [id]) // ← The relation: "Use carTypeId to point to CarType's id"
   name         String
-  ownerId      Int
+  ownerId      Int // Foreign key to User
+  owner        User    @relation(fields: [ownerId], references: [id])
   state        String
   fuelType     String
   horsepower   Int
   licensePlate String  @unique
   info         String?
 }
+
+// model Booking {
+//   id        Int    @id @default(autoincrement())
+//   carId     Int
+//   state     String
+//   renterId  Int
+//   startDate String
+//   endDate   String
+// }
