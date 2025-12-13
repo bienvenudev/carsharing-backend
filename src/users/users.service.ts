@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
@@ -7,17 +6,32 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
   findAll() {
-    return this.prisma.user.findMany();
-  }
-  findOne(id: number) {
-    return this.prisma.user.findUnique({ where: { id } });
+    // Return all users without passwords
+    return this.prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
   }
 
-  create(createUserDto: CreateUserDto) {
-    return this.prisma.user.create({ data: createUserDto });
+  findOne(id: number) {
+    return this.prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
   }
 
   delete(id: number) {
-    return this.prisma.user.delete({ where: { id } });
+    return this.prisma.user.delete({
+      where: { id },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
   }
 }
